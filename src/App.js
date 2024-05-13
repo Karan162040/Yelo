@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import Card from "./components/Card";
+import Board from "./components/Board";
 function App() {
+  const [isClicked, setIsClicked] = useState(false);
+  const [Data, setData] = useState([]);
+
+  const DataHandler = (item) => {
+    setData((curr) => [...curr, item]);
+    console.log(Data);
+  };
+
+  const showCardHandler = (e) => {
+    e.preventDefault();
+    setIsClicked(!isClicked);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Board Data={Data} />
+      {isClicked && (
+        <Card showCardHandler={showCardHandler} DataHandler={DataHandler} />
+      )}
+      <button onClick={showCardHandler}>Add</button>
     </div>
   );
 }
